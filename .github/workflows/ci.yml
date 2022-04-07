@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - name: Add oneAPI repo for apt
+        run: bash .github/scripts/prepare_oneapi_apt.sh
+      - name: Install oneTBB
+        run: sudo apt install -y intel-oneapi-tbb-devel-2021.5.0
       - name: Configure
         run: cmake -S . -B build
       - name: Build
@@ -38,6 +42,8 @@ jobs:
     needs: [build_linux]
     steps:
       - uses: actions/checkout@v2
+      - name: Add oneAPI repo for apt
+        run: bash .github/scripts/prepare_oneapi_apt.sh
       - name: Download package
         uses: actions/download-artifact@v2
         with:
