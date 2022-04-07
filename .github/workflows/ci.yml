@@ -28,5 +28,19 @@ jobs:
       - name: Save package
         uses: actions/upload-artifact@v2
         with:
-          name: build_linux
+          name: build_linux_package
           path: build/*.deb
+
+  test_linux:
+    runs-on: ubuntu-20.04
+    needs: [build_linux]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download package
+        uses: actions/download-artifact@v2
+        with:
+          name: build_linux_package
+      - name: Install package
+        run: sudo apt install -y ./intsum*Linux.deb
+      - name: Run test
+        run: .github/scripts/test.sh
