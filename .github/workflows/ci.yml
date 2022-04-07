@@ -40,7 +40,20 @@ jobs:
   test_linux:
     runs-on: ubuntu-20.04
     needs: [build_linux]
+    container:
+      image: ${{ matrix.image }}
+    strategy:
+      matrix:
+        image:
+          - debian:stable
+          - ubuntu:18.04
+          - ubuntu:20.04
+          - ubuntu:22.04
     steps:
+      - name: Print OS version
+        run: cat /etc/*release
+      - name: Install tools
+        run: apt update && apt install -y wget gnupg
       - uses: actions/checkout@v2
       - name: Add oneAPI repo for apt
         run: bash .github/scripts/prepare_oneapi_apt.sh
@@ -49,7 +62,7 @@ jobs:
         with:
           name: build_linux_package
       - name: Install package
-        run: sudo apt install -y ./intsum*Linux.deb
+        run: apt install -y ./intsum*Linux.deb
       - name: Run test
         run: bash .github/scripts/test.sh
 
