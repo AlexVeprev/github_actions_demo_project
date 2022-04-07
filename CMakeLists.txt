@@ -19,5 +19,6 @@ install(TARGETS intsum
 set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_PACKAGE_CONTACT "aveprev27@gmail.com")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "intel-oneapi-runtime-tbb")
 
 include(CPack)
