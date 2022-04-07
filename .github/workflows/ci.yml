@@ -17,3 +17,7 @@ jobs:
         run: |
           cd build
           make VERBOSE=1
+      - name: Test
+        run: |
+          cd build
+          ctest --output-on-failure
